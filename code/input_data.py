@@ -11,10 +11,15 @@ word2vec_path = data_prefix+'wiki.en.vec'
 training_data_path = data_prefix + 'train_shuffle.txt'
 test_data_path = data_prefix + 'test.txt'
 
-seen_intent = ['music', 'search', 'movie', 'weather', 'restaurant']
-unseen_intent = ['playlist', 'book']
+# jiayi
+# seen_intent = ['music', 'search', 'movie', 'weather', 'restaurant']
+# unseen_intent = ['playlist', 'book']
+seen_intent = ['search creative work', 'search screening event', 'play music', 'get weather', 'book restaurant']
+unseen_intent = ['get weather', 'play music', 'search creative work', 'search screening event', 'add to playlist'] #'book restaurant','rate book'
 
-
+# seen_intent = ['search', 'play', 'get', 'book']
+# unseen_intent = ['book', 'get', 'play', 'search', 'add', 'rate']  #不可有book
+# change to one word
 def load_w2v(file_name):
     """ load w2v model
         input: model file name
@@ -81,6 +86,7 @@ def load_vec(file_path, w2v, class_dict, in_max_len):
         if cname not in class_dict:
             continue
 
+
         # trans words into indexes
         x_arr = []
         for w in question:
@@ -141,9 +147,13 @@ def read_datasets():
     # pre process seen and unseen labels
     sc_dict, sc_vec = process_label(seen_intent, w2v)
     uc_dict, uc_vec = process_label(unseen_intent, w2v)
-
     # trans data into embedding vectors
     max_len = 0
+    # jiayi
+    # x_tr, y_tr, s_len, max_len = load_vec(
+    #         training_data_path, w2v, sc_dict, max_len)
+    # x_te, y_te, u_len, max_len = load_vec(
+    #         test_data_path, w2v, uc_dict, max_len)
     x_tr, y_tr, s_len, max_len = load_vec(
             training_data_path, w2v, sc_dict, max_len)
     x_te, y_te, u_len, max_len = load_vec(

@@ -87,6 +87,8 @@ class lstm_model():
             input_embed,
             self.s_len,
             dtype=tf.float32)
+        print("我要开始啦")
+        print(input_embed)
         H = tf.concat([H[0], H[1]], axis=2)
 
         A = tf.nn.softmax(
